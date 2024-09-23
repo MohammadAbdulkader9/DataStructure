@@ -224,20 +224,20 @@ namespace DataStructure
             
             do
             {
-                Console.Write("Input: ");
-                string choice = Console.ReadLine();
+                Console.Write("Input: "); 
+                string choice = Console.ReadLine(); // user input to navigate the Queue system
                 switch (choice)
                 {
                     case "1":
-                        Enqueue(queue);
+                        Enqueue(queue); // add name to the queue
                         break;
 
                     case "2":
-                        Dequeue(queue);
+                        Dequeue(queue); // remove name from the queue
                         break;
 
                     case "0":
-                        programStatus = false;
+                        programStatus = false; // to exit the program
                         break;
 
                     default:
@@ -245,7 +245,7 @@ namespace DataStructure
                         break;
                 }
 
-                Console.WriteLine("Persons in queue: ");
+                Console.WriteLine("Persons in queue: "); // show the persons that are in the queue
                 foreach (string person in queue)
                 {
                     Console.WriteLine(person);
@@ -256,14 +256,14 @@ namespace DataStructure
             }
             while (programStatus);
 
-            static void Enqueue(Queue<string> queue)
+            static void Enqueue(Queue<string> queue) // adding to queue method
             {               
                 Console.Write("Write name to enter the queue: ");
                 string name = Console.ReadLine();
                 queue.Enqueue(name);
             }
 
-            static void Dequeue(Queue<string> queue)
+            static void Dequeue(Queue<string> queue) // removing name from the queue method
             {               
                 queue.Dequeue();
             }
@@ -275,8 +275,66 @@ namespace DataStructure
              * Loop this method until the user inputs something to exit to main menue.
              * Create a switch with cases to push or pop items
              * Make sure to look at the stack after pushing and and poping to see how it behaves
-            */
-        }
+            */            
+               
+                Stack<string> stack = new Stack<string>();
+                bool programStatus = true;
+
+                Console.WriteLine(
+                    "ICA Stack System\n" +
+                    "1. Enter the queue\n" +
+                    "2. Exit the queue\n" +
+                    "0. Exit the program");
+
+                Console.WriteLine("-------------------");
+
+                do
+                {
+                    Console.Write("Input: "); 
+                    string choice = Console.ReadLine(); // user input to navigating the stack menu
+                    switch (choice)
+                    {
+                        case "1":
+                            PushName(stack); // adding name to the stack. method
+                            break;
+
+                        case "2":
+                            PopName(stack); // removing name from the stack. method
+                            break;
+
+                        case "0":
+                            programStatus = false; // exiting the stack menu
+                            break;
+
+                        default:
+                            Console.WriteLine("Wrong input!");
+                            break;
+                    }
+
+                    Console.WriteLine("Persons in stack: "); // display the stack
+                    foreach (string person in stack)
+                    {
+                        Console.WriteLine(person);
+                    }
+
+                    Console.WriteLine("-------------------");
+
+                }
+                while (programStatus);
+
+                static void PushName(Stack<string> stack) // adding name to the stack
+                {
+                    Console.Write("Write name to enter the stack: ");
+                    string name = Console.ReadLine();
+                     stack.Push(name);
+                }
+
+                static void PopName(Stack<string> stack) // removing name from the stack
+                {
+                    stack.Pop();    
+                }
+            }
+
 
         static void CheckParanthesis()
         {
