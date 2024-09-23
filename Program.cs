@@ -1,8 +1,79 @@
-﻿namespace DataStructure
+﻿using System;
+using System.Drawing;
+
+namespace DataStructure
 {
     internal class Program
     {
         static void Main(string[] args)
+        {
+            /*
+            F.1. Hur fungerar stacken och heapen?
+            
+             - Stack (LIFO): stacken hanterar methoder och local variables.
+                      när en method anropas läggs den på toppen av stacken och när methoden är klar tas den bort.
+            ex.
+            + lägga till stack:
+            method 1
+            method 2
+            method 3
+            ...
+            + ta bort från stack:
+            method 3
+            method 2
+            method 1
+            ...
+           * lägga till och ta bort från stack ska vara i ordning, och det rensas automatiskt när metoder avslutas.            
+            
+           ------------
+
+           - Heap:  heapen sparar data som inte har en bestämd livscykel.
+                    minnet frigörs av Garbage Collector när objekten inte längre används.
+           obj 1
+           obj 2
+           obj 3
+           heap [obj 1, obj 2, obj 3]
+           alla obj är tillgängliga när det behövs.
+           * när method inte används då har vi kvar objekterna till de tas bort av GC.
+            
+           ---------------------------------------------------------------------------
+            F.2. Vad är Value Types respektive Reference Types och vad skiljer dem åt?
+
+            Value  Type: sparar sina värden direkt och det kan vara int, double, bool..
+            
+            Reference Type: sparar en plats(reference) i minnet för objekt, class eller string.(de sparar en plats i minnet inte själva värdet)
+            ---------------------------------------------------------------------------
+            F.3. Följande metoder genererar olika svar. Den första returnerar 3, den andra returnerar 4, varför?
+           
+            public int ReturnValue()
+            {
+                int x = new int();
+                x = 3;
+                int y =  new int();
+                y = x;
+                y = 4;
+                return x;
+            }
+            * den här metoden manipulerar en value type och ändringen sker i metoden.
+
+            public int ReturnValue2()
+            {
+                MyInt x = new MyInt();
+                x.MyValue = 3;
+                MyInt y = new MyInt();
+                y = x;
+                y.MyValue = 4;
+                return x.MyValue;
+            }
+            *den här metoden manipulerar en reference type och ändringen sker i minnet
+            --------------------------------------------------------------------------
+           */
+
+            Menu();
+
+        }
+
+        private static void Menu()
         {
             while (true)
             {
@@ -62,12 +133,73 @@
             * Below you can see some inspirational code to begin working.
            */
 
-            //List<string> theList = new List<string>();
-            //string input = Console.ReadLine();
-            //char nav = input[0];
-            //string value = input.substring(1);
+            Console.WriteLine("--------------------------------------------------------");
+            Console.WriteLine("To Add name to the list write + infront of the name");
+            Console.WriteLine("To remove name from the list write - infront of the name");
+            Console.WriteLine("To exit the program enter e");
+            Console.WriteLine("--------------------------------------------------------");
 
-            //switch(nav){...}
+
+            List<string> theList = new List<string>(); // create a list to hold the names
+            bool programStatus = true;
+            
+
+            do
+            {
+                Console.Write("Input: ");
+                string input = Console.ReadLine(); // user inputs the names
+
+                char nav = input[0]; // read the first symbol of the input.
+                string value = input.Substring(1); // read the rest of the input starting from the second index.
+
+                switch (nav) // navigating based on the + and -
+                {
+                    case '+':
+                        theList.Add(value); // adding the name to the list
+                        break;
+
+                    case '-':
+                        theList.Remove(value); // removing the name from the list
+                        break;
+
+                    case 'e':
+                        programStatus = false; // to exit the program
+                        break;
+
+                    default: // display wrong input message
+                        Console.WriteLine("Wrong input");
+                        break;
+                }
+                Console.WriteLine($"Item Count in the list: {theList.Count}");
+                Console.WriteLine($"Capacity of the list: {theList.Capacity}");
+
+                foreach (string names in theList) // use for-each loop to display the names in the list
+                {
+                    Console.WriteLine(names);
+                }
+                Console.WriteLine("---------------------");
+
+            } while (programStatus);
+
+            /*
+             F.1. När ökar listans kapacitet?
+             S.1. listans kapacitet öker automatiskt när användaren lägger till namn i listan.
+             -
+             F.2. Med hur mycket ökar kapaciteten?
+             S.2. i början så är listans kapacitet null, när användaren har läggt till ett namn då blir kapaciteten 4,
+                  när listan får 4 namn då öker kapaciteten till 8, -> 8 namn : kapaciteten 16.(listans kapacitet fördubblas)
+             -
+             F.3.  Varför ökar inte listans kapacitet i samma takt som element läggs till?
+             S.3. om kapaciteten ökar med antalet element på listan, kommer programmet inte att vara snabbt och effektivt.
+             - 
+             F.4. Minskar kapaciteten när element tas bort ur listan?
+             S.4. nej, kapaciteten minskar inte automatiskt. men om du börjar om programet då börjar kapaciteten från 4.
+             -
+             F.5. När är det då fördelaktigt att använda en egendefinierad array istället för en lista?
+             S.5. om man vet exakt hur många element man behöver du är det bättre att använda egendefinierad array.
+             */
+
+
         }
 
         static void ExamineQueue()
