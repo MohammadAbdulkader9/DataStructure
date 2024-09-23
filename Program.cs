@@ -83,7 +83,9 @@ namespace DataStructure
                     + "\n3. Examine a Stack"
                     + "\n4. CheckParenthesis"
                     + "\n0. Exit the application");
+                Console.WriteLine("---------------------");
                 char input = ' '; //Creates the character input to be used with the switch-case below.
+                Console.Write("Input: ");
                 try
                 {
                     input = Console.ReadLine()![0]; //Tries to set input to the first char in an input line
@@ -93,6 +95,8 @@ namespace DataStructure
                     Console.Clear();
                     Console.WriteLine("Please enter some input!");
                 }
+                Console.WriteLine("---------------------");
+
                 switch (input)
                 {
                     case '1':
@@ -198,8 +202,6 @@ namespace DataStructure
              F.5. När är det då fördelaktigt att använda en egendefinierad array istället för en lista?
              S.5. om man vet exakt hur många element man behöver du är det bättre att använda egendefinierad array.
              */
-
-
         }
 
         static void ExamineQueue()
@@ -209,6 +211,62 @@ namespace DataStructure
              * Create a switch with cases to enqueue items or dequeue items
              * Make sure to look at the queue after Enqueueing and Dequeueing to see how it behaves
             */
+            Queue<string> queue = new Queue<string>();
+            bool programStatus = true;
+
+            Console.WriteLine(
+                "ICA Queue System\n" +
+                "1. Enter the queue\n" +
+                "2. Exit the queue\n" +
+                "0. Exit the program");
+               
+            Console.WriteLine("-------------------");
+            
+            do
+            {
+                Console.Write("Input: ");
+                string choice = Console.ReadLine();
+                switch (choice)
+                {
+                    case "1":
+                        Enqueue(queue);
+                        break;
+
+                    case "2":
+                        Dequeue(queue);
+                        break;
+
+                    case "0":
+                        programStatus = false;
+                        break;
+
+                    default:
+                        Console.WriteLine("Wrong input!");
+                        break;
+                }
+
+                Console.WriteLine("Persons in queue: ");
+                foreach (string person in queue)
+                {
+                    Console.WriteLine(person);
+                }
+
+                Console.WriteLine("-------------------");
+
+            }
+            while (programStatus);
+
+            static void Enqueue(Queue<string> queue)
+            {               
+                Console.Write("Write name to enter the queue: ");
+                string name = Console.ReadLine();
+                queue.Enqueue(name);
+            }
+
+            static void Dequeue(Queue<string> queue)
+            {               
+                queue.Dequeue();
+            }
         }
 
         static void ExamineStack()
