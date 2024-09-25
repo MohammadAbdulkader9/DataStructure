@@ -39,7 +39,7 @@ namespace DataStructure
            ---------------------------------------------------------------------------
             F.2. Vad är Value Types respektive Reference Types och vad skiljer dem åt?
 
-            Value  Type: sparar sina värden direkt och det kan vara int, double, bool..
+            Value Type: sparar sina värden direkt och det kan vara int, double, bool..
             
             Reference Type: sparar en plats(reference) i minnet för objekt, class eller string.(de sparar en plats i minnet inte själva värdet)
             ---------------------------------------------------------------------------
@@ -65,7 +65,7 @@ namespace DataStructure
                 y.MyValue = 4;
                 return x.MyValue;
             }
-            *den här metoden manipulerar en reference type och ändringen sker i minnet
+            * den här metoden manipulerar en reference type och ändringen sker i minnet
             --------------------------------------------------------------------------
            */
 
@@ -82,6 +82,7 @@ namespace DataStructure
                     + "\n2. Examine a Queue"
                     + "\n3. Examine a Stack"
                     + "\n4. CheckParenthesis"
+                    + "\n5. Recursive Method"
                     + "\n0. Exit the application");
                 Console.WriteLine("---------------------");
                 char input = ' '; //Creates the character input to be used with the switch-case below.
@@ -111,6 +112,9 @@ namespace DataStructure
                     case '4':
                         CheckParanthesis();
                         break;
+                    case '5':
+                        RecursiveMethod();
+                        break;
                     /*
                      * Extend the menu to include the recursive 
                      * and iterative exercises.
@@ -119,7 +123,7 @@ namespace DataStructure
                         Environment.Exit(0);
                         break;
                     default:
-                        Console.WriteLine("Please enter some valid input (0, 1, 2, 3, 4)");
+                        Console.WriteLine("Please enter some valid input (0, 1, 2, 3, 4, 5)");
                         break;
                 }
             }
@@ -146,7 +150,7 @@ namespace DataStructure
 
             List<string> theList = new List<string>(); // create a list to hold the names
             bool programStatus = true;
-            
+
 
             do
             {
@@ -219,25 +223,25 @@ namespace DataStructure
                 "1. Enter the queue\n" +
                 "2. Exit the queue\n" +
                 "0. Exit the program");
-               
+
             Console.WriteLine("-------------------");
-            
+
             do
             {
-                Console.Write("Input: "); 
-                string choice = Console.ReadLine(); // user input to navigate the Queue system
+                Console.Write("Input: ");
+                string choice = Console.ReadLine(); // user input to navigate the Queue menu
                 switch (choice)
                 {
                     case "1":
-                        Enqueue(queue); // add name to the queue
+                        Enqueue(queue); // add name to the queue. method
                         break;
 
                     case "2":
-                        Dequeue(queue); // remove name from the queue
+                        Dequeue(queue); // remove name from the queue. method
                         break;
 
                     case "0":
-                        programStatus = false; // to exit the program
+                        programStatus = false; // to exit the queue menu
                         break;
 
                     default:
@@ -245,7 +249,7 @@ namespace DataStructure
                         break;
                 }
 
-                Console.WriteLine("Persons in queue: "); // show the persons that are in the queue
+                Console.WriteLine("Persons in queue: "); // show the queue
                 foreach (string person in queue)
                 {
                     Console.WriteLine(person);
@@ -257,16 +261,18 @@ namespace DataStructure
             while (programStatus);
 
             static void Enqueue(Queue<string> queue) // adding to queue method
-            {               
+            {
                 Console.Write("Write name to enter the queue: ");
                 string name = Console.ReadLine();
                 queue.Enqueue(name);
             }
 
             static void Dequeue(Queue<string> queue) // removing name from the queue method
-            {               
+            {
                 queue.Dequeue();
             }
+
+            // it is not usual to use Stack for Queue system because stack uses first in last out methods. 
         }
 
         static void ExamineStack()
@@ -274,66 +280,67 @@ namespace DataStructure
             /*
              * Loop this method until the user inputs something to exit to main menue.
              * Create a switch with cases to push or pop items
-             * Make sure to look at the stack after pushing and and poping to see how it behaves
-            */            
-               
-                Stack<string> stack = new Stack<string>();
-                bool programStatus = true;
+             * Make sure to look at the stack after pushing and poping to see how it behaves
+            */
 
-                Console.WriteLine(
-                    "ICA Stack System\n" +
-                    "1. Enter the queue\n" +
-                    "2. Exit the queue\n" +
-                    "0. Exit the program");
+            Stack<string> stack = new Stack<string>();
+            bool programStatus = true;
+
+            Console.WriteLine(
+                "ICA Queue System (using stack)\n" +
+                "1. Enter the queue\n" +
+                "2. Exit the queue\n" +
+                "0. Exit the program");
+
+            Console.WriteLine("-------------------");
+
+            do
+            {
+                Console.Write("Input: ");
+                string choice = Console.ReadLine(); // user input to navigating the stack menu
+
+                switch (choice)
+                {
+                    case "1":
+                        PushName(stack); // adding name to the stack. method
+                        break;
+
+                    case "2":
+                        PopName(stack); // removing name from the stack. method
+                        break;
+
+                    case "0":
+                        programStatus = false; // exiting the stack menu
+                        break;
+
+                    default:
+                        Console.WriteLine("Wrong input!");
+                        break;
+                }
+
+                Console.WriteLine("Persons in stack: "); // display the stack
+                foreach (string person in stack)
+                {
+                    Console.WriteLine(person);
+                }
 
                 Console.WriteLine("-------------------");
 
-                do
-                {
-                    Console.Write("Input: "); 
-                    string choice = Console.ReadLine(); // user input to navigating the stack menu
-                    switch (choice)
-                    {
-                        case "1":
-                            PushName(stack); // adding name to the stack. method
-                            break;
-
-                        case "2":
-                            PopName(stack); // removing name from the stack. method
-                            break;
-
-                        case "0":
-                            programStatus = false; // exiting the stack menu
-                            break;
-
-                        default:
-                            Console.WriteLine("Wrong input!");
-                            break;
-                    }
-
-                    Console.WriteLine("Persons in stack: "); // display the stack
-                    foreach (string person in stack)
-                    {
-                        Console.WriteLine(person);
-                    }
-
-                    Console.WriteLine("-------------------");
-
-                }
-                while (programStatus);
-
-                static void PushName(Stack<string> stack) // adding name to the stack
-                {
-                    Console.Write("Write name to enter the stack: ");
-                    string name = Console.ReadLine();
-                     stack.Push(name);
-                }
-
-                static void PopName(Stack<string> stack) // removing name from the stack
-                {
-                    stack.Pop();    
-                }
             }
+            while (programStatus);
+
+            static void PushName(Stack<string> stack) // adding name to the stack
+            {
+                Console.Write("Write name to enter the queue: ");
+                string name = Console.ReadLine();
+                stack.Push(name);
+            }
+
+            static void PopName(Stack<string> stack) // removing name from the stack
+            {
+                stack.Pop();
+            }
+        }
 
 
         static void CheckParanthesis()
@@ -343,6 +350,60 @@ namespace DataStructure
              * Example of correct: (()), {}, [({})],  List<int> list = new List<int>() { 1, 2, 3, 4 };
              * Example of incorrect: (()]), [), {[()}],  List<int> list = new List<int>() { 1, 2, 3, 4 );
              */
+        }
+
+        static void RecursiveMethod()
+        {
+            Console.WriteLine("Recursiv Program");
+            Console.WriteLine("-----------------");
+
+            Console.WriteLine(
+                "RecursiveOdd: \n" +
+                RecursiveOdd(1) + "\n" +
+                RecursiveOdd(3) + "\n" +
+                RecursiveOdd(5)
+                );
+            //Console.WriteLine(RecursiveOdd(1));
+            //Console.WriteLine(RecursiveOdd(3));
+            //Console.WriteLine(RecursiveOdd(5));
+
+            Console.WriteLine(
+                "RecursiveEven: \n" +
+                RecursiveEven(0) + "\n" +
+                RecursiveEven(1) + "\n" +
+                RecursiveEven(6)
+                );
+            //Console.WriteLine(RecursiveEven(0));
+            //Console.WriteLine(RecursiveEven(1));
+            //Console.WriteLine(RecursiveEven(6));
+
+            Console.WriteLine("Recursiv Fibonacci: ");
+            Console.WriteLine(RecursivFibonacci(6));
+
+
+            static int RecursivFibonacci(int n) // this method calculates the n Fibonacci number recursively.
+            {
+                if (n <= 1)
+                    return n;
+                else
+                    return RecursivFibonacci(n - 1) + RecursivFibonacci(n - 2);
+            }
+
+            static int RecursiveOdd(int n) // this method calculates the sum of the odd number up to n. ex/ n = 5 -> 1+3+5 = 9
+            {
+                if (n == 1)
+                    return 1;
+                else
+                    return RecursiveOdd(n - 2) + n;
+            }
+
+            static int RecursiveEven(int n)// this method calculates the sum of the even number up to n. ex/ n = 6 -> 2+4+6 = 12
+            {
+                if (n == 0)
+                    return 0;
+                else
+                    return RecursiveEven(n - 1) + 2;
+            }
         }
     }
 }
