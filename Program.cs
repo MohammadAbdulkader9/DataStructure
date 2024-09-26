@@ -68,7 +68,11 @@ namespace DataStructure
                 return x.MyValue;
             }
             * den här metoden manipulerar en reference type och ändringen sker i minnet
+            
             --------------------------------------------------------------------------
+            F. Utgå ifrån era nyvunna kunskaper om iteration, rekursion och minneshantering. Vilken av ovanstående funktioner är mest minnesvänlig och varför?
+            S. Iteration är mest minnesvänlig, och det beror på att den använder en konstant mängd minne.
+               Rekursion kan leda till stack overflow för att funktionen anrpoas flera gånger och detta öker minnesåtgång.
            */
 
             Menu();
@@ -288,6 +292,7 @@ namespace DataStructure
                 "ICA Queue System (using stack)\n" +
                 "1. Enter the queue\n" +
                 "2. Exit the queue\n" +
+                "3. Reverse a text\n" +
                 "0. Exit the program");
 
             Console.WriteLine("-------------------");
@@ -307,6 +312,10 @@ namespace DataStructure
                         PopName(stack); // removing name from the stack. method
                         break;
 
+                    case "3":
+                        ReverseText(); // reverse a string using Stack. method
+                        break;
+
                     case "0":
                         programStatus = false; // exiting the stack menu
                         break;
@@ -316,14 +325,15 @@ namespace DataStructure
                         break;
                 }
 
-                Console.WriteLine("Persons in stack: "); // display the stack
-                foreach (string person in stack)
+                if (stack.Count is not 0)
                 {
-                    Console.WriteLine(person);
-                }
-
-                Console.WriteLine("-------------------");
-
+                    Console.WriteLine("Persons in stack: "); // display the stack
+                    foreach (string person in stack)
+                    {
+                        Console.WriteLine(person);
+                    }
+                    Console.WriteLine("-------------------");
+                }             
             }
             while (programStatus);
 
@@ -338,7 +348,40 @@ namespace DataStructure
             {
                 stack.Pop();
             }
-        }
+
+            static void ReverseText()
+            {
+                Console.WriteLine("Reverse Text Program");
+                Console.WriteLine("--------------------");
+
+                Console.Write("Enter your text: ");
+                string text = Console.ReadLine(); // user input a text
+
+                string reversedText = ReversedText(text); // send the text to reverse method
+
+                Console.WriteLine($"Reversed text: {reversedText}"); // display the reversed method
+
+                static string ReversedText(string text)
+                {
+                    Stack<char> stack = new Stack<char>(); 
+
+                    foreach (char c in text) // loop through the text and store each letter in the stack
+                    {
+                        stack.Push(c); 
+                    }
+
+                    string reversed = "";
+
+                    while (stack.Count > 0)
+                    {
+                        reversed += stack.Pop(); // remove the letter form the stack and store it in reversed variable
+                    }
+
+                    return reversed;
+                }
+                Console.WriteLine("--------------------");
+            }
+        }       
 
         static void CheckParanthesis()
         {
@@ -361,7 +404,7 @@ namespace DataStructure
                 Console.WriteLine("Wrong format");
 
             // Wrong format paranthesis
-            string par2 = "{([)}]";
+            string par2 = "())";
             Console.WriteLine($"paranthesis: {par2}");
 
             if (IsPair(par2))
