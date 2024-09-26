@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.Design;
 using System.Drawing;
 
 namespace DataStructure
@@ -42,6 +43,7 @@ namespace DataStructure
             Value Type: sparar sina värden direkt och det kan vara int, double, bool..
             
             Reference Type: sparar en plats(reference) i minnet för objekt, class eller string.(de sparar en plats i minnet inte själva värdet)
+
             ---------------------------------------------------------------------------
             F.3. Följande metoder genererar olika svar. Den första returnerar 3, den andra returnerar 4, varför?
            
@@ -70,23 +72,25 @@ namespace DataStructure
            */
 
             Menu();
-
         }
 
         private static void Menu()
         {
             while (true)
             {
-                Console.WriteLine("Please navigate through the menu by inputting the number \n(1, 2, 3 ,4, 0) of your choice"
+                Console.WriteLine("Please navigate through the menu by inputting the number \n(1, 2, 3 ,4, 5, 6, 0) of your choice"
                     + "\n1. Examine a List"
                     + "\n2. Examine a Queue"
                     + "\n3. Examine a Stack"
                     + "\n4. CheckParenthesis"
                     + "\n5. Recursive Method"
+                    + "\n6. Iterative Method"
                     + "\n0. Exit the application");
                 Console.WriteLine("---------------------");
+
                 char input = ' '; //Creates the character input to be used with the switch-case below.
                 Console.Write("Input: ");
+
                 try
                 {
                     input = Console.ReadLine()![0]; //Tries to set input to the first char in an input line
@@ -96,6 +100,7 @@ namespace DataStructure
                     Console.Clear();
                     Console.WriteLine("Please enter some input!");
                 }
+
                 Console.WriteLine("---------------------");
 
                 switch (input)
@@ -115,15 +120,14 @@ namespace DataStructure
                     case '5':
                         RecursiveMethod();
                         break;
-                    /*
-                     * Extend the menu to include the recursive 
-                     * and iterative exercises.
-                     */
+                    case '6':
+                        IterativeMethod();
+                        break;
                     case '0':
                         Environment.Exit(0);
                         break;
                     default:
-                        Console.WriteLine("Please enter some valid input (0, 1, 2, 3, 4, 5)");
+                        Console.WriteLine("Please enter some valid input (0, 1, 2, 3, 4, 5, 6)");
                         break;
                 }
             }
@@ -147,10 +151,8 @@ namespace DataStructure
             Console.WriteLine("To exit the program enter e");
             Console.WriteLine("--------------------------------------------------------");
 
-
             List<string> theList = new List<string>(); // create a list to hold the names
             bool programStatus = true;
-
 
             do
             {
@@ -165,19 +167,17 @@ namespace DataStructure
                     case '+':
                         theList.Add(value); // adding the name to the list
                         break;
-
                     case '-':
                         theList.Remove(value); // removing the name from the list
                         break;
-
                     case 'e':
                         programStatus = false; // to exit the program
                         break;
-
                     default: // display wrong input message
                         Console.WriteLine("Wrong input");
                         break;
                 }
+
                 Console.WriteLine($"Item Count in the list: {theList.Count}");
                 Console.WriteLine($"Capacity of the list: {theList.Capacity}");
 
@@ -185,6 +185,7 @@ namespace DataStructure
                 {
                     Console.WriteLine(names);
                 }
+
                 Console.WriteLine("---------------------");
 
             } while (programStatus);
@@ -235,15 +236,12 @@ namespace DataStructure
                     case "1":
                         Enqueue(queue); // add name to the queue. method
                         break;
-
                     case "2":
                         Dequeue(queue); // remove name from the queue. method
                         break;
-
                     case "0":
                         programStatus = false; // to exit the queue menu
                         break;
-
                     default:
                         Console.WriteLine("Wrong input!");
                         break;
@@ -342,7 +340,6 @@ namespace DataStructure
             }
         }
 
-
         static void CheckParanthesis()
         {
             /*
@@ -350,6 +347,58 @@ namespace DataStructure
              * Example of correct: (()), {}, [({})],  List<int> list = new List<int>() { 1, 2, 3, 4 };
              * Example of incorrect: (()]), [), {[()}],  List<int> list = new List<int>() { 1, 2, 3, 4 );
              */
+
+            Console.WriteLine("Paranthesis Program");
+            Console.WriteLine("-----------------");
+
+            // Correct format paranthesis
+            string par = "{()}[]";
+            Console.WriteLine($"paranthesis: {par}");
+
+            if (IsPair(par))
+                Console.WriteLine("Correct format");
+            else
+                Console.WriteLine("Wrong format");
+
+            // Wrong format paranthesis
+            string par2 = "{([)}]";
+            Console.WriteLine($"paranthesis: {par2}");
+
+            if (IsPair(par2))
+                Console.WriteLine("Correct format");
+            else
+                Console.WriteLine("Wrong format");
+
+            Console.WriteLine("-----------------");
+
+            static bool IsPair(string p)
+            {
+                Stack<char> stack = new Stack<char>();
+
+                for (int i = 0; i < p.Length; i++)
+                {
+                    if (p[i] == '(' || p[i] == '{' || p[i] == '[') // check to see if the string is starting with open paranthesis and pushes it to the stack
+                    {
+                        stack.Push(p[i]);
+                    }
+                    else
+                    {
+                        if (stack.Count > 0 && // to check if the stack is not empty
+                            (
+                            (stack.Peek() == '(' && p[i] == ')') || // Peek() is used to look for the next item in the stack.
+                            (stack.Peek() == '{' && p[i] == '}') ||
+                            (stack.Peek() == '[' && p[i] == ']') ))
+                        {
+                            stack.Pop();
+                        }
+                        else
+                        {
+                            return false;  // returns false if the paranthesis is in wrong format
+                        }
+                    }
+                }
+                return stack.Count == 0;
+            }
         }
 
         static void RecursiveMethod()
@@ -358,7 +407,7 @@ namespace DataStructure
             Console.WriteLine("-----------------");
 
             Console.WriteLine(
-                "RecursiveOdd: \n" +
+                "Recursive Odd: \n" +
                 RecursiveOdd(1) + "\n" +
                 RecursiveOdd(3) + "\n" +
                 RecursiveOdd(5)
@@ -368,7 +417,7 @@ namespace DataStructure
             //Console.WriteLine(RecursiveOdd(5));
 
             Console.WriteLine(
-                "RecursiveEven: \n" +
+                "Recursive Even: \n" +
                 RecursiveEven(0) + "\n" +
                 RecursiveEven(1) + "\n" +
                 RecursiveEven(6)
@@ -378,8 +427,11 @@ namespace DataStructure
             //Console.WriteLine(RecursiveEven(6));
 
             Console.WriteLine("Recursiv Fibonacci: ");
-            Console.WriteLine(RecursivFibonacci(6));
+            Console.WriteLine(RecursivFibonacci(5));
+            Console.WriteLine(RecursivFibonacci(7));
+            Console.WriteLine(RecursivFibonacci(8));
 
+            Console.WriteLine("-------------------");
 
             static int RecursivFibonacci(int n) // this method calculates the n Fibonacci number recursively.
             {
@@ -403,6 +455,59 @@ namespace DataStructure
                     return 0;
                 else
                     return RecursiveEven(n - 1) + 2;
+            }
+        }
+
+        private static void IterativeMethod()
+        {
+            Console.WriteLine("Iterative Program");
+            Console.WriteLine("-----------------");
+
+            Console.WriteLine(
+                "Iterative Odd: \n" +
+                IterativeOdd(1) + "\n" +
+                IterativeOdd(3) + "\n" +
+                IterativeOdd(5));
+
+            Console.WriteLine(
+                "Iterative Odd: \n" +
+                IterativeEven(0) + "\n" +
+                IterativeEven(1) + "\n" +
+                IterativeEven(6));
+
+            Console.WriteLine("Iterative Fibonacci: ");
+            Console.WriteLine(IterativeFibonacci(5));
+            Console.WriteLine(IterativeFibonacci(7));
+            Console.WriteLine(IterativeFibonacci(8));
+
+            Console.WriteLine("-------------------");
+
+            static int IterativeFibonacci(int n) // this method calculates the n Fibonacci series Iterativly.
+            {
+                if (n == 0) return 0;
+                if (n == 1) return 1;
+
+                int x = 0;
+                int y = 1;
+                int temp = 0;
+
+                for (int i = 2; i <= n; i++)
+                {
+                    temp = x + y;
+                    x = y;
+                    y = temp;
+                }
+                return temp;
+            }
+
+            static int IterativeOdd(int n) // this method calculates the odd number by multiplying the n with 2 and decrease it by 1.
+            {
+                return 2 * n - 1;
+            }
+
+            static int IterativeEven(int n)// this method calculates the even number by multiplying the n with 2
+            {
+                return 2 * n;
             }
         }
     }
